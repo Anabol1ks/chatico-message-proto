@@ -1,0 +1,167 @@
+syntax = "proto3";
+
+package auth.v1;
+
+option go_package = "github.com/Anabol1ks/Chatico-Message-proto/auth/v1;authv1";
+
+import "google/protobuf/empty.proto";
+import "google/protobuf/timestamp.proto";
+import "validate/validate.proto";
+import "google/api/annotations.proto";
+
+// Назначение кода подтверждения (соответствует БД)
+enum VerificationPurpose {
+  VERIFICATION_PURPOSE_UNSPECIFIED = 0;
+  VERIFICATION_PURPOSE_SIGNUP = 1;
+  VERIFICATION_PURPOSE_CHANGE_PHONE = 2;
+}
+
+service AuthService {
+  // Регистрация пользователя (создание учётки; подтверждение — через Telegram)
+  rpc Register (RegisterRequest) returns (RegisterResponse) {
+    option (google.api.http) = {
+      post: "/api/v1/auth/register"
+      body: "*"
+    };
+  }
+
+  rpc Login (LoginRequest) returns (TokenPair) {
+    option (google.api.http) = {
+      post: "/api/v1/auth/login"
+      body: "*"
+    };
+  }
+
+  rpc Refresh (RefreshRequest) returns (TokenPair) {
+    option (google.api.http) = {
+      post: "/api/v1/auth/refresh"
+      body: "*"
+    };
+  }
+
+  rpc ValidateAccessToken (ValidateAccessTokenRequest) returns (ValidateAccessTokenResponse) {
+    option (google.api.http) = {
+      post: "/api/v1/auth/validate-access"
+      body: "*"
+    };
+  }
+
+  // Инициация кода подтверждения для Telegram (вызывает tg-bot-service)
+  rpc CreateTelegramVerificationCode (CreateTelegramVerificationCodeRequest) returns (CreateTelegramVerificationCodeResponse) {
+    option (google.api.http) = {
+      post: "/api/v1/auth/telegram/code:create"
+      body: "*"
+    };
+  }
+
+  // Подтверждение кода из Telegram (вызывает tg-bot-service)
+  rpc ConfirmTelegramVerification (ConfirmTelegramVerificationRequest) returns (ConfirmTelegramVerificationResponse) {
+    option (google.api.http) = {
+      post: "/api/v1/auth/telegram/confirm"
+      body: "*"
+    };
+  }
+
+  // Запрос на сброс пароля
+  rpc RequestPasswordReset (RequestPasswordResetRequest) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      post: "/api/v1/auth/password/reset/request"
+      body: "*"
+    };
+  }
+
+  // Подтверждение сброса пароля
+  rpc ConfirmPasswordReset (ConfirmPasswordResetRequest) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      post: "/api/v1/auth/password/reset/confirm"
+      body: "*"
+    };
+  }
+}
+
+// ===== Telegram verification =====
+
+message CreateTelegramVerificationCodeRequest {
+  // Telegram user ID (обязателен)
+  int64 telegram_id = 1 [(validate.rules).int64 = {gt: 0}];
+
+  // Назначение кода (signup/change_phone)
+  VerificationPurpose purpose = 2 [(validate.rules).enum = {defined_only: true}];
+
+  // Телефон в формате E.164; для signup обычно обязателен на вашей стороне
+  string phone = 3 [(validate.rules).string = {pattern: "^\\+[1-9]\\d{1,14}$"}];
+
+  // TTL в секундах (по умолчанию 300 на сервере)
+  uint32 ttl_seconds = 4 [(validate.rules).uint32 = {gte: 60, lte: 3600}];
+}
+
+message CreateTelegramVerificationCodeResponse {
+  // Одноразовый код в явном виде (если требуется отправлять ботом)
+  string code = 1 [(validate.rules).string = {min_len: 4, max_len: 12}];
+
+  // Время истечения
+  google.protobuf.Timestamp expires_at = 2;
+}
+
+message ConfirmTelegramVerificationRequest {
+  int64 telegram_id = 1 [(validate.rules).int64 = {gt: 0}];
+  VerificationPurpose purpose = 2 [(validate.rules).enum = {defined_only: true}];
+
+  // Код, введённый/полученный пользователем
+  string code = 3 [(validate.rules).string = {min_len: 4, max_len: 12}];
+
+  // Телефон в E.164 — помогает связать с ожидаемой операцией (signup/change)
+  string phone = 4 [(validate.rules).string = {pattern: "^\\+[1-9]\\d{1,14}$"}];
+}
+
+message ConfirmTelegramVerificationResponse {
+  string user_id = 1;
+  string phone = 2;
+  bool verified = 3;
+}
+
+// ===== Auth core =====
+
+message RegisterRequest {
+  string phone = 1 [(validate.rules).string = {pattern: "^\\+[1-9]\\d{1,14}$"}];
+  string password = 2 [(validate.rules).string = {min_len: 8, max_len: 64}];
+}
+
+message RegisterResponse {
+  string id = 1;
+  string phone = 2;
+}
+
+message LoginRequest {
+  string phone = 1 [(validate.rules).string = {pattern: "^\\+[1-9]\\d{1,14}$"}];
+  string password = 2 [(validate.rules).string = {min_len: 8, max_len: 64}];
+}
+
+message TokenPair {
+  string access_token = 1;
+  string refresh_token = 2;
+}
+
+message RefreshRequest {
+  string refresh_token = 1 [(validate.rules).string = {min_len: 16}];
+}
+
+message ValidateAccessTokenRequest {
+  string access_token = 1 [(validate.rules).string = {min_len: 16}];
+}
+
+message ValidateAccessTokenResponse {
+  string user_id = 1;
+  bool valid = 2;
+}
+
+// ===== Password reset =====
+
+message RequestPasswordResetRequest {
+  string phone = 1 [(validate.rules).string = {pattern: "^\\+[1-9]\\d{1,14}$"}];
+}
+
+message ConfirmPasswordResetRequest {
+  string token = 1 [(validate.rules).string = {min_len: 16}];
+  string new_password = 2 [(validate.rules).string = {min_len: 8, max_len: 64}];
+}
