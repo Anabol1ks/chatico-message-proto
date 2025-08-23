@@ -775,6 +775,42 @@ func (x *ConfirmPasswordResetRequest) GetNewPassword() string {
 	return ""
 }
 
+type LogoutRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *LogoutRequest) Reset() {
+	*x = LogoutRequest{}
+	mi := &file_auth_v1_auth_proto_msgTypes[13]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *LogoutRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*LogoutRequest) ProtoMessage() {}
+
+func (x *LogoutRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_auth_v1_auth_proto_msgTypes[13]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use LogoutRequest.ProtoReflect.Descriptor instead.
+func (*LogoutRequest) Descriptor() ([]byte, []int) {
+	return file_auth_v1_auth_proto_rawDescGZIP(), []int{13}
+}
+
 var File_auth_v1_auth_proto protoreflect.FileDescriptor
 
 const file_auth_v1_auth_proto_rawDesc = "" +
@@ -825,11 +861,12 @@ const file_auth_v1_auth_proto_rawDesc = "" +
 	"\x05phone\x18\x01 \x01(\tB\x18\xfaB\x15r\x132\x11^\\+[1-9]\\d{1,14}$R\x05phone\"j\n" +
 	"\x1bConfirmPasswordResetRequest\x12\x1d\n" +
 	"\x05token\x18\x01 \x01(\tB\a\xfaB\x04r\x02\x10\x10R\x05token\x12,\n" +
-	"\fnew_password\x18\x02 \x01(\tB\t\xfaB\x06r\x04\x10\b\x18@R\vnewPassword*\x83\x01\n" +
+	"\fnew_password\x18\x02 \x01(\tB\t\xfaB\x06r\x04\x10\b\x18@R\vnewPassword\"\x0f\n" +
+	"\rLogoutRequest*\x83\x01\n" +
 	"\x13VerificationPurpose\x12$\n" +
 	" VERIFICATION_PURPOSE_UNSPECIFIED\x10\x00\x12\x1f\n" +
 	"\x1bVERIFICATION_PURPOSE_SIGNUP\x10\x01\x12%\n" +
-	"!VERIFICATION_PURPOSE_CHANGE_PHONE\x10\x022\x8d\b\n" +
+	"!VERIFICATION_PURPOSE_CHANGE_PHONE\x10\x022\xe4\b\n" +
 	"\vAuthService\x12a\n" +
 	"\bRegister\x12\x18.auth.v1.RegisterRequest\x1a\x19.auth.v1.RegisterResponse\" \x82\xd3\xe4\x93\x02\x1a:\x01*\"\x15/api/v1/auth/register\x12Q\n" +
 	"\x05Login\x12\x15.auth.v1.LoginRequest\x1a\x12.auth.v1.TokenPair\"\x1d\x82\xd3\xe4\x93\x02\x17:\x01*\"\x12/api/v1/auth/login\x12W\n" +
@@ -838,7 +875,8 @@ const file_auth_v1_auth_proto_rawDesc = "" +
 	"\x1eCreateTelegramVerificationCode\x12..auth.v1.CreateTelegramVerificationCodeRequest\x1a/.auth.v1.CreateTelegramVerificationCodeResponse\",\x82\xd3\xe4\x93\x02&:\x01*\"!/api/v1/auth/telegram/code:create\x12\xa2\x01\n" +
 	"\x1bConfirmTelegramVerification\x12+.auth.v1.ConfirmTelegramVerificationRequest\x1a,.auth.v1.ConfirmTelegramVerificationResponse\"(\x82\xd3\xe4\x93\x02\":\x01*\"\x1d/api/v1/auth/telegram/confirm\x12\x84\x01\n" +
 	"\x14RequestPasswordReset\x12$.auth.v1.RequestPasswordResetRequest\x1a\x16.google.protobuf.Empty\".\x82\xd3\xe4\x93\x02(:\x01*\"#/api/v1/auth/password/reset/request\x12\x84\x01\n" +
-	"\x14ConfirmPasswordReset\x12$.auth.v1.ConfirmPasswordResetRequest\x1a\x16.google.protobuf.Empty\".\x82\xd3\xe4\x93\x02(:\x01*\"#/api/v1/auth/password/reset/confirmB;Z9github.com/Anabol1ks/Chatico-Message-proto/auth/v1;authv1b\x06proto3"
+	"\x14ConfirmPasswordReset\x12$.auth.v1.ConfirmPasswordResetRequest\x1a\x16.google.protobuf.Empty\".\x82\xd3\xe4\x93\x02(:\x01*\"#/api/v1/auth/password/reset/confirm\x12U\n" +
+	"\x06Logout\x12\x16.auth.v1.LogoutRequest\x1a\x16.google.protobuf.Empty\"\x1b\x82\xd3\xe4\x93\x02\x15\"\x13/api/v1/auth/logoutB;Z9github.com/Anabol1ks/Chatico-Message-proto/auth/v1;authv1b\x06proto3"
 
 var (
 	file_auth_v1_auth_proto_rawDescOnce sync.Once
@@ -853,7 +891,7 @@ func file_auth_v1_auth_proto_rawDescGZIP() []byte {
 }
 
 var file_auth_v1_auth_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
-var file_auth_v1_auth_proto_msgTypes = make([]protoimpl.MessageInfo, 13)
+var file_auth_v1_auth_proto_msgTypes = make([]protoimpl.MessageInfo, 14)
 var file_auth_v1_auth_proto_goTypes = []any{
 	(VerificationPurpose)(0),                       // 0: auth.v1.VerificationPurpose
 	(*CreateTelegramVerificationCodeRequest)(nil),  // 1: auth.v1.CreateTelegramVerificationCodeRequest
@@ -869,12 +907,13 @@ var file_auth_v1_auth_proto_goTypes = []any{
 	(*ValidateAccessTokenResponse)(nil),            // 11: auth.v1.ValidateAccessTokenResponse
 	(*RequestPasswordResetRequest)(nil),            // 12: auth.v1.RequestPasswordResetRequest
 	(*ConfirmPasswordResetRequest)(nil),            // 13: auth.v1.ConfirmPasswordResetRequest
-	(*timestamppb.Timestamp)(nil),                  // 14: google.protobuf.Timestamp
-	(*emptypb.Empty)(nil),                          // 15: google.protobuf.Empty
+	(*LogoutRequest)(nil),                          // 14: auth.v1.LogoutRequest
+	(*timestamppb.Timestamp)(nil),                  // 15: google.protobuf.Timestamp
+	(*emptypb.Empty)(nil),                          // 16: google.protobuf.Empty
 }
 var file_auth_v1_auth_proto_depIdxs = []int32{
 	0,  // 0: auth.v1.CreateTelegramVerificationCodeRequest.purpose:type_name -> auth.v1.VerificationPurpose
-	14, // 1: auth.v1.CreateTelegramVerificationCodeResponse.expires_at:type_name -> google.protobuf.Timestamp
+	15, // 1: auth.v1.CreateTelegramVerificationCodeResponse.expires_at:type_name -> google.protobuf.Timestamp
 	0,  // 2: auth.v1.ConfirmTelegramVerificationRequest.purpose:type_name -> auth.v1.VerificationPurpose
 	5,  // 3: auth.v1.AuthService.Register:input_type -> auth.v1.RegisterRequest
 	7,  // 4: auth.v1.AuthService.Login:input_type -> auth.v1.LoginRequest
@@ -884,16 +923,18 @@ var file_auth_v1_auth_proto_depIdxs = []int32{
 	3,  // 8: auth.v1.AuthService.ConfirmTelegramVerification:input_type -> auth.v1.ConfirmTelegramVerificationRequest
 	12, // 9: auth.v1.AuthService.RequestPasswordReset:input_type -> auth.v1.RequestPasswordResetRequest
 	13, // 10: auth.v1.AuthService.ConfirmPasswordReset:input_type -> auth.v1.ConfirmPasswordResetRequest
-	6,  // 11: auth.v1.AuthService.Register:output_type -> auth.v1.RegisterResponse
-	8,  // 12: auth.v1.AuthService.Login:output_type -> auth.v1.TokenPair
-	8,  // 13: auth.v1.AuthService.Refresh:output_type -> auth.v1.TokenPair
-	11, // 14: auth.v1.AuthService.ValidateAccessToken:output_type -> auth.v1.ValidateAccessTokenResponse
-	2,  // 15: auth.v1.AuthService.CreateTelegramVerificationCode:output_type -> auth.v1.CreateTelegramVerificationCodeResponse
-	4,  // 16: auth.v1.AuthService.ConfirmTelegramVerification:output_type -> auth.v1.ConfirmTelegramVerificationResponse
-	15, // 17: auth.v1.AuthService.RequestPasswordReset:output_type -> google.protobuf.Empty
-	15, // 18: auth.v1.AuthService.ConfirmPasswordReset:output_type -> google.protobuf.Empty
-	11, // [11:19] is the sub-list for method output_type
-	3,  // [3:11] is the sub-list for method input_type
+	14, // 11: auth.v1.AuthService.Logout:input_type -> auth.v1.LogoutRequest
+	6,  // 12: auth.v1.AuthService.Register:output_type -> auth.v1.RegisterResponse
+	8,  // 13: auth.v1.AuthService.Login:output_type -> auth.v1.TokenPair
+	8,  // 14: auth.v1.AuthService.Refresh:output_type -> auth.v1.TokenPair
+	11, // 15: auth.v1.AuthService.ValidateAccessToken:output_type -> auth.v1.ValidateAccessTokenResponse
+	2,  // 16: auth.v1.AuthService.CreateTelegramVerificationCode:output_type -> auth.v1.CreateTelegramVerificationCodeResponse
+	4,  // 17: auth.v1.AuthService.ConfirmTelegramVerification:output_type -> auth.v1.ConfirmTelegramVerificationResponse
+	16, // 18: auth.v1.AuthService.RequestPasswordReset:output_type -> google.protobuf.Empty
+	16, // 19: auth.v1.AuthService.ConfirmPasswordReset:output_type -> google.protobuf.Empty
+	16, // 20: auth.v1.AuthService.Logout:output_type -> google.protobuf.Empty
+	12, // [12:21] is the sub-list for method output_type
+	3,  // [3:12] is the sub-list for method input_type
 	3,  // [3:3] is the sub-list for extension type_name
 	3,  // [3:3] is the sub-list for extension extendee
 	0,  // [0:3] is the sub-list for field type_name
@@ -910,7 +951,7 @@ func file_auth_v1_auth_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_auth_v1_auth_proto_rawDesc), len(file_auth_v1_auth_proto_rawDesc)),
 			NumEnums:      1,
-			NumMessages:   13,
+			NumMessages:   14,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
