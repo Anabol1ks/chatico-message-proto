@@ -14,3 +14,12 @@ protoi:
 	go install github.com/envoyproxy/protoc-gen-validate@latest
 	go install github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-grpc-gateway@latest
 	go install github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-openapiv2@latest
+
+
+bump:
+	@powershell -Command "$$last = git describe --tags --abbrev=0; \
+		$$parts = $$last -split '\.'; \
+		$$new = '{0}.{1}.{2}' -f $$parts[0], $$parts[1], ([int]$$parts[2] + 1); \
+		Write-Output ('New tag: ' + $$new); \
+		git tag $$new; \
+		git push origin $$new"

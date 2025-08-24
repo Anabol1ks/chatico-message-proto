@@ -1642,6 +1642,17 @@ func (m *LogoutRequest) validate(all bool) error {
 
 	var errors []error
 
+	if utf8.RuneCountInString(m.GetRefreshToken()) < 16 {
+		err := LogoutRequestValidationError{
+			field:  "RefreshToken",
+			reason: "value length must be at least 16 runes",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
 	if len(errors) > 0 {
 		return LogoutRequestMultiError(errors)
 	}

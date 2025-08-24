@@ -172,4 +172,6 @@ message ConfirmPasswordResetRequest {
   string new_password = 2 [(validate.rules).string = {min_len: 8, max_len: 64}];
 }
 
-message LogoutRequest {}
+message LogoutRequest {
+  string refresh_token = 1 [(validate.rules).string = {min_len: 16}];
+}
