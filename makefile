@@ -27,7 +27,11 @@ protoi:
 bump:
 	@powershell -Command "$$last = git describe --tags --abbrev=0; \
 		$$parts = $$last -split '\.'; \
-		$$new = '{0}.{1}.{2}' -f $$parts[0], $$parts[1], ([int]$$parts[2] + 1); \
+		if ([int]$$parts[2] -ge 9) { \
+			$$new = '{0}.{1}.{2}' -f $$parts[0], ([int]$$parts[1] + 1), 0; \
+		} else { \
+			$$new = '{0}.{1}.{2}' -f $$parts[0], $$parts[1], ([int]$$parts[2] + 1); \
+		} \
 		Write-Output ('New tag: ' + $$new); \
 		git tag $$new; \
 		git push origin $$new"
