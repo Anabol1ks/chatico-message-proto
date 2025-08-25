@@ -1,0 +1,57 @@
+syntax = "proto3";
+
+package tgbot.v1;
+
+option go_package = "github.com/Anabol1ks/Chatico-Message-proto/tgbot/v1;tgbotv1";
+
+import "validate/validate.proto";
+import "google/api/annotations.proto";
+import "google/protobuf/empty.proto";
+
+// Сервис для отправки сообщений через Telegram-бота
+service TgBotService {
+  // Отправить код сброса пароля
+  rpc SendPasswordResetCode(SendPasswordResetCodeRequest) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      post: "/v1/tg/send-password-reset-code"
+      body: "*"
+    };
+  }
+
+  // Отправить код подтверждения (например, для регистрации/смены телефона)
+  rpc SendVerificationCode(SendVerificationCodeRequest) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      post: "/v1/tg/send-verification-code"
+      body: "*"
+    };
+  }
+
+  // Отправить произвольное уведомление
+  rpc SendNotification(SendNotificationRequest) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      post: "/v1/tg/send-notification"
+      body: "*"
+    };
+  }
+}
+
+// Запрос на отправку кода сброса пароля
+message SendPasswordResetCodeRequest {
+  int64 telegram_id = 1 [(validate.rules).int64 = {gt: 0}]; // Telegram ID пользователя
+  string code = 2 [(validate.rules).string = {min_len: 4, max_len: 12}]; // Код сброса пароля
+  int32 ttl_seconds = 4 [(validate.rules).int32 = {gte: 60, lte: 3600}]; // Время жизни кода (опционально)
+}
+
+// Запрос на отправку кода подтверждения
+message SendVerificationCodeRequest {
+  int64 telegram_id = 1 [(validate.rules).int64 = {gt: 0}];
+  string code = 2 [(validate.rules).string = {min_len: 4, max_len: 12}];
+  string purpose = 3 [(validate.rules).string = {in: ["signup", "change_phone"]}]; // signup, change_phone и т.д.
+  int32 ttl_seconds = 4 [(validate.rules).int32 = {gte: 60, lte: 3600}];
+}
+
+// Запрос на отправку произвольного уведомления
+message SendNotificationRequest {
+  int64 telegram_id = 1 [(validate.rules).int64 = {gt: 0}];
+  string message = 2 [(validate.rules).string = {min_len: 1, max_len: 4096}];
+}

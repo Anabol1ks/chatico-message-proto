@@ -5,7 +5,15 @@ proto:
 		--go-grpc_out=. --go-grpc_opt=paths=source_relative \
 		--validate_out=lang=go,paths=source_relative:. \
 		--grpc-gateway_out=. --grpc-gateway_opt=paths=source_relative,generate_unbound_methods=true \
-		--openapiv2_out=docs/openapi --openapiv2_opt=logtostderr=true,allow_merge=true,merge_file_name=linkvault-auth
+		--openapiv2_out=docs/openapi --openapiv2_opt=logtostderr=true,allow_merge=true,merge_file_name=chatico-auth
+
+	protoc tgbot/v1/tgbot.proto \
+		--proto_path=. \
+		--go_out=. --go_opt=paths=source_relative \
+		--go-grpc_out=. --go-grpc_opt=paths=source_relative \
+		--validate_out=lang=go,paths=source_relative:. \
+		--grpc-gateway_out=. --grpc-gateway_opt=paths=source_relative,generate_unbound_methods=true \
+		--openapiv2_out=docs/openapi --openapiv2_opt=logtostderr=true,allow_merge=true,merge_file_name=chatico-tgbot
 
 
 protoi:

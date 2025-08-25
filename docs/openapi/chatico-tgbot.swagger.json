@@ -1,0 +1,206 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "tgbot/v1/tgbot.proto",
+    "version": "version not set"
+  },
+  "tags": [
+    {
+      "name": "TgBotService"
+    }
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/v1/tg/send-notification": {
+      "post": {
+        "summary": "Отправить произвольное уведомление",
+        "operationId": "TgBotService_SendNotification",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "type": "object",
+              "properties": {}
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1SendNotificationRequest"
+            }
+          }
+        ],
+        "tags": [
+          "TgBotService"
+        ]
+      }
+    },
+    "/v1/tg/send-password-reset-code": {
+      "post": {
+        "summary": "Отправить код сброса пароля",
+        "operationId": "TgBotService_SendPasswordResetCode",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "type": "object",
+              "properties": {}
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1SendPasswordResetCodeRequest"
+            }
+          }
+        ],
+        "tags": [
+          "TgBotService"
+        ]
+      }
+    },
+    "/v1/tg/send-verification-code": {
+      "post": {
+        "summary": "Отправить код подтверждения (например, для регистрации/смены телефона)",
+        "operationId": "TgBotService_SendVerificationCode",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "type": "object",
+              "properties": {}
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1SendVerificationCodeRequest"
+            }
+          }
+        ],
+        "tags": [
+          "TgBotService"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "@type": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": {}
+    },
+    "rpcStatus": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/protobufAny"
+          }
+        }
+      }
+    },
+    "v1SendNotificationRequest": {
+      "type": "object",
+      "properties": {
+        "telegramId": {
+          "type": "string",
+          "format": "int64"
+        },
+        "message": {
+          "type": "string"
+        }
+      },
+      "title": "Запрос на отправку произвольного уведомления"
+    },
+    "v1SendPasswordResetCodeRequest": {
+      "type": "object",
+      "properties": {
+        "telegramId": {
+          "type": "string",
+          "format": "int64",
+          "title": "Telegram ID пользователя"
+        },
+        "code": {
+          "type": "string",
+          "title": "Код сброса пароля"
+        },
+        "ttlSeconds": {
+          "type": "integer",
+          "format": "int32",
+          "title": "Время жизни кода (опционально)"
+        }
+      },
+      "title": "Запрос на отправку кода сброса пароля"
+    },
+    "v1SendVerificationCodeRequest": {
+      "type": "object",
+      "properties": {
+        "telegramId": {
+          "type": "string",
+          "format": "int64"
+        },
+        "code": {
+          "type": "string"
+        },
+        "purpose": {
+          "type": "string",
+          "description": "signup, change_phone и т.д."
+        },
+        "ttlSeconds": {
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "title": "Запрос на отправку кода подтверждения"
+    }
+  }
+}
