@@ -169,7 +169,7 @@ message RequestPasswordResetRequest {
 
 message ConfirmPasswordResetRequest {
   string phone = 1 [(validate.rules).string = {pattern: "^\\+[1-9]\\d{1,14}$"}];
-  string token = 2 [(validate.rules).string = {min_len: 16}];
+  string code = 2 [(validate.rules).string = {min_len: 4, max_len: 12}];
   string new_password = 3 [(validate.rules).string = {min_len: 8, max_len: 64}];
 }
 
