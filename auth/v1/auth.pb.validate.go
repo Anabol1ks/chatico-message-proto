@@ -1528,10 +1528,10 @@ func (m *ConfirmPasswordResetRequest) validate(all bool) error {
 		errors = append(errors, err)
 	}
 
-	if utf8.RuneCountInString(m.GetToken()) < 16 {
+	if l := utf8.RuneCountInString(m.GetCode()); l < 4 || l > 12 {
 		err := ConfirmPasswordResetRequestValidationError{
-			field:  "Token",
-			reason: "value length must be at least 16 runes",
+			field:  "Code",
+			reason: "value length must be between 4 and 12 runes, inclusive",
 		}
 		if !all {
 			return err

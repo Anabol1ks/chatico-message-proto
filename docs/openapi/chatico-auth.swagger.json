@@ -346,7 +346,7 @@
         "phone": {
           "type": "string"
         },
-        "token": {
+        "code": {
           "type": "string"
         },
         "newPassword": {

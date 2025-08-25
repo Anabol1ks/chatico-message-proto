@@ -726,7 +726,7 @@ func (x *RequestPasswordResetRequest) GetPhone() string {
 type ConfirmPasswordResetRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Phone         string                 `protobuf:"bytes,1,opt,name=phone,proto3" json:"phone,omitempty"`
-	Token         string                 `protobuf:"bytes,2,opt,name=token,proto3" json:"token,omitempty"`
+	Code          string                 `protobuf:"bytes,2,opt,name=code,proto3" json:"code,omitempty"`
 	NewPassword   string                 `protobuf:"bytes,3,opt,name=new_password,json=newPassword,proto3" json:"new_password,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -769,9 +769,9 @@ func (x *ConfirmPasswordResetRequest) GetPhone() string {
 	return ""
 }
 
-func (x *ConfirmPasswordResetRequest) GetToken() string {
+func (x *ConfirmPasswordResetRequest) GetCode() string {
 	if x != nil {
-		return x.Token
+		return x.Code
 	}
 	return ""
 }
@@ -877,7 +877,7 @@ const file_auth_v1_auth_proto_rawDesc = "" +
 	"\x05phone\x18\x01 \x01(\tB\x18\xfaB\x15r\x132\x11^\\+[1-9]\\d{1,14}$R\x05phone\"\x9a\x01\n" +
 	"\x1bConfirmPasswordResetRequest\x12.\n" +
 	"\x05phone\x18\x01 \x01(\tB\x18\xfaB\x15r\x132\x11^\\+[1-9]\\d{1,14}$R\x05phone\x12\x1d\n" +
-	"\x05token\x18\x02 \x01(\tB\a\xfaB\x04r\x02\x10\x10R\x05token\x12,\n" +
+	"\x04code\x18\x02 \x01(\tB\t\xfaB\x06r\x04\x10\x04\x18\fR\x04code\x12,\n" +
 	"\fnew_password\x18\x03 \x01(\tB\t\xfaB\x06r\x04\x10\b\x18@R\vnewPassword\"=\n" +
 	"\rLogoutRequest\x12,\n" +
 	"\rrefresh_token\x18\x01 \x01(\tB\a\xfaB\x04r\x02\x10\x10R\frefreshToken*\x83\x01\n" +
