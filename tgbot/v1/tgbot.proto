@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package tgbot.v1;
 
-option go_package = "github.com/Anabol1ks/Chatico-Message-proto/tgbot/v1;tgbotv1";
+option go_package = "github.com/Anabol1ks/rentAdvisor-proto/tgbot/v1;tgbotv1";
 
 import "validate/validate.proto";
 import "google/api/annotations.proto";

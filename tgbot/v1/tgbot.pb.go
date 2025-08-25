@@ -235,7 +235,7 @@ const file_tgbot_v1_tgbot_proto_rawDesc = "" +
 	"\fTgBotService\x12\x83\x01\n" +
 	"\x15SendPasswordResetCode\x12&.tgbot.v1.SendPasswordResetCodeRequest\x1a\x16.google.protobuf.Empty\"*\x82\xd3\xe4\x93\x02$:\x01*\"\x1f/v1/tg/send-password-reset-code\x12\x7f\n" +
 	"\x14SendVerificationCode\x12%.tgbot.v1.SendVerificationCodeRequest\x1a\x16.google.protobuf.Empty\"(\x82\xd3\xe4\x93\x02\":\x01*\"\x1d/v1/tg/send-verification-code\x12r\n" +
-	"\x10SendNotification\x12!.tgbot.v1.SendNotificationRequest\x1a\x16.google.protobuf.Empty\"#\x82\xd3\xe4\x93\x02\x1d:\x01*\"\x18/v1/tg/send-notificationB=Z;github.com/Anabol1ks/Chatico-Message-proto/tgbot/v1;tgbotv1b\x06proto3"
+	"\x10SendNotification\x12!.tgbot.v1.SendNotificationRequest\x1a\x16.google.protobuf.Empty\"#\x82\xd3\xe4\x93\x02\x1d:\x01*\"\x18/v1/tg/send-notificationB9Z7github.com/Anabol1ks/rentAdvisor-proto/tgbot/v1;tgbotv1b\x06proto3"
 
 var (
 	file_tgbot_v1_tgbot_proto_rawDescOnce sync.Once

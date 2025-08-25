@@ -885,7 +885,7 @@ const file_auth_v1_auth_proto_rawDesc = "" +
 	"\x1bConfirmTelegramVerification\x12+.auth.v1.ConfirmTelegramVerificationRequest\x1a,.auth.v1.ConfirmTelegramVerificationResponse\"(\x82\xd3\xe4\x93\x02\":\x01*\"\x1d/api/v1/auth/telegram/confirm\x12\x84\x01\n" +
 	"\x14RequestPasswordReset\x12$.auth.v1.RequestPasswordResetRequest\x1a\x16.google.protobuf.Empty\".\x82\xd3\xe4\x93\x02(:\x01*\"#/api/v1/auth/password/reset/request\x12\x84\x01\n" +
 	"\x14ConfirmPasswordReset\x12$.auth.v1.ConfirmPasswordResetRequest\x1a\x16.google.protobuf.Empty\".\x82\xd3\xe4\x93\x02(:\x01*\"#/api/v1/auth/password/reset/confirm\x12U\n" +
-	"\x06Logout\x12\x16.auth.v1.LogoutRequest\x1a\x16.google.protobuf.Empty\"\x1b\x82\xd3\xe4\x93\x02\x15\"\x13/api/v1/auth/logoutB;Z9github.com/Anabol1ks/Chatico-Message-proto/auth/v1;authv1b\x06proto3"
+	"\x06Logout\x12\x16.auth.v1.LogoutRequest\x1a\x16.google.protobuf.Empty\"\x1b\x82\xd3\xe4\x93\x02\x15\"\x13/api/v1/auth/logoutB7Z5github.com/Anabol1ks/rentAdvisor-proto/auth/v1;authv1b\x06proto3"
 
 var (
 	file_auth_v1_auth_proto_rawDescOnce sync.Once
