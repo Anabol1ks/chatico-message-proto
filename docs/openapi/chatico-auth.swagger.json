@@ -343,6 +343,9 @@
     "v1ConfirmPasswordResetRequest": {
       "type": "object",
       "properties": {
+        "phone": {
+          "type": "string"
+        },
         "token": {
           "type": "string"
         },

@@ -1517,6 +1517,17 @@ func (m *ConfirmPasswordResetRequest) validate(all bool) error {
 
 	var errors []error
 
+	if !_ConfirmPasswordResetRequest_Phone_Pattern.MatchString(m.GetPhone()) {
+		err := ConfirmPasswordResetRequestValidationError{
+			field:  "Phone",
+			reason: "value does not match regex pattern \"^\\\\+[1-9]\\\\d{1,14}$\"",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
 	if utf8.RuneCountInString(m.GetToken()) < 16 {
 		err := ConfirmPasswordResetRequestValidationError{
 			field:  "Token",
@@ -1619,6 +1630,8 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = ConfirmPasswordResetRequestValidationError{}
+
+var _ConfirmPasswordResetRequest_Phone_Pattern = regexp.MustCompile("^\\+[1-9]\\d{1,14}$")
 
 // Validate checks the field values on LogoutRequest with the rules defined in
 // the proto definition for this message. If any rules are violated, the first
